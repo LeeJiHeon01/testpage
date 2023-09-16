@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        /* CSS 스타일을 추가하세요 */
+        .photo-gallery {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+        }
+        .photo-gallery li {
+            flex: 0 0 calc(20% - 10px);
+            height: auto;
+            margin: 10px;
+        }
+		.photo-gallery li img {
+  			width: 200px;
+  			height: 600px;
+		}
+    </style>
+</head>
+<body>
+    <ul class="photo-gallery">
+        <li><img src="1.png" alt="사진 1"></li>
+        <li><img src="2.png" alt="사진 2"></li>
+        <li><img src="3.png" alt="사진 3"></li>
+        <li><img src="4.png" alt="사진 4"></li>
+        <li><img src="5.png" alt="사진 5"></li>
+        <li><img src="6.png" alt="사진 6"></li>
+        <li><img src="7.png" alt="사진 7"></li>
+        <li><img src="8.png" alt="사진 8"></li>
+        <li><img src="g1.png" alt="사진 9"></li>
+    </ul>
+
+    <script>
+        // JavaScript를 사용하여 페이지네이션을 구현합니다.
+        var photosPerPage = 8; // 페이지당 사진 수
+        var currentPage = 1; // 현재 페이지
+
+        // 사진을 추가하는 함수
+        function addPhoto(photo) {
+            var gallery = document.querySelector('.photo-gallery');
+            var li = document.createElement('li');
+            li.innerHTML = '<img src="' + photo + '" alt="사진">';
+            gallery.appendChild(li);
+
+            // 페이지당 사진 수를 초과하면 페이지를 넘깁니다.
+            if (gallery.children.length > photosPerPage) {
+                currentPage++;
+                gallery.style.display = 'none'; // 현재 페이지의 사진 감추기
+                displayPage(currentPage); // 다음 페이지의 사진 표시
+            }
+        }
+
+        // 페이지에 해당하는 사진을 표시하는 함수
+        function displayPage(page) {
+            var gallery = document.querySelector('.photo-gallery');
+            var photos = gallery.children;
+
+            // 이전 페이지의 사진 숨기기
+            for (var i = 0; i < photos.length; i++) {
+                photos[i].style.display = 'none';
+            }
+
+            // 현재 페이지의 사진 표시
+            var start = (page - 1) * photosPerPage;
+            var end = start + photosPerPage;
+            for (var j = start; j < end; j++) {
+                if (photos[j]) {
+                    photos[j].style.display = 'inline-block';
+                }
+            }
+
+            gallery.style.display = 'flex';
+        }
+    </script>
+</body>
+</html>
